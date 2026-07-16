@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.Color
 import com.baywatch.app.data.model.GeoJsonGeometry
 import com.baywatch.app.data.model.Zone
 import com.baywatch.app.data.model.ZoneType
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.Polygon
+import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.compose.annotation.generated.PolygonAnnotation
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.double
@@ -14,16 +14,15 @@ import kotlinx.serialization.json.jsonArray
 
 @Composable
 fun ZonePolygonOverlay(zone: Zone) {
-    val points = geometryToLatLngs(zone.geometry)
+    val points = geometryToPoints(zone.geometry)
     if (points.isEmpty()) return
 
     val fillColor = zoneFillColor(zone.type)
-    Polygon(
-        points = points,
-        fillColor = fillColor.copy(alpha = 0.35f),
-        strokeColor = fillColor.copy(alpha = 0.9f),
-        strokeWidth = 4f,
-    )
+    PolygonAnnotation(points = listOf(points)) {
+        fillColor = fillColor
+        fillOpacity = 0.35
+        fillOutlineColor = fillColor.copy(alpha = 0.9f)
+    }
 }
 
 private fun zoneFillColor(type: ZoneType): Color = when (type) {
@@ -32,7 +31,7 @@ private fun zoneFillColor(type: ZoneType): Color = when (type) {
     ZoneType.SCHOOL_ZONE -> Color(0xFFFFD166)
 }
 
-private fun geometryToLatLngs(geometry: GeoJsonGeometry): List<LatLng> {
+private fun geometryToPoints(geometry: GeoJsonGeometry): List<Point> {
     return when (geometry.type) {
         "Polygon" -> parsePolygonRing(geometry.coordinates)
         "MultiPolygon" -> {
@@ -45,27 +44,27 @@ private fun geometryToLatLngs(geometry: GeoJsonGeometry): List<LatLng> {
     }
 }
 
-private fun parsePolygonRing(coordinates: JsonElement): List<LatLng> {
+private fun parsePolygonRing(coordinates: JsonElement): List<Point> {
     val rings = coordinates.jsonArray
     val outer = rings.firstOrNull()?.jsonArray ?: return emptyList()
     return outer.mapNotNull { coord ->
         val pair = coord.jsonArray
         if (pair.size < 2) return@mapNotNull null
-        LatLng(pair[1].double, pair[0].double)
+        Point.fromLngLat(pair[0].double, pair[1].double)
     }
 }
 
-private fun parseLineString(coordinates: JsonElement): List<LatLng> {
+private fun parseLineString(coordinates: JsonElement): List<Point> {
     val points = coordinates.jsonArray
     return points.mapNotNull { coord ->
         val pair = coord.jsonArray
         if (pair.size < 2) return@mapNotNull null
-        LatLng(pair[1].double, pair[0].double)
+        Point.fromLngLat(pair[0].double, pair[1].double)
     }
 }
 
-private fun parsePoint(coordinates: JsonElement): LatLng? {
+private fun parsePoint(coordinates: JsonElement): Point? {
     val pair = coordinates.jsonArray
     if (pair.size < 2) return null
-    return LatLng(pair[1].double, pair[0].double)
+    return Point.fromLngLat(pair[0].double, pair[1].double)
 }

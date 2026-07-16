@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">Bay-Watch</string>
-    <string name="google_maps_key">@string/maps_api_key_placeholder</string>
-    <string name="maps_api_key_placeholder">YOUR_MAPS_API_KEY</string>
 </resources>

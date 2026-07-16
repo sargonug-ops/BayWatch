@@ -18,7 +18,7 @@ Hyper-local situational awareness for San Francisco. Bay-Watch visualizes the ge
 ```
 ┌─────────────────┐     5 min poll      ┌──────────────────┐
 │  Android app    │ ◄────────────────── │  backend proxy   │
-│  (Compose+Maps) │   GET /api/v1/state │  (Node + cache)  │
+│  (Compose+Mapbox)│   GET /api/v1/state │  (Node + cache)  │
 └─────────────────┘                     └────────┬─────────┘
                                                    │
                      ┌─────────────────────────────┼─────────────────────────────┐
@@ -60,7 +60,7 @@ npm run dev
 
 1. Open `android/` in Android Studio (Ladybug or newer).
 2. Copy `android/local.properties.example` → `android/local.properties`.
-3. Add `MAPS_API_KEY` (Google Maps SDK) and `BAYWATCH_API_BASE_URL` (e.g. `http://10.0.2.2:3000` for emulator).
+3. Add `MAPBOX_ACCESS_TOKEN` (public `pk.` token recommended) and `BAYWATCH_API_BASE_URL` (e.g. `http://10.0.2.2:3000` for emulator) to `local.properties`.
 4. Run on a device or emulator.
 
 ```bash
@@ -73,7 +73,8 @@ cd android
 | Variable | Where | Description |
 | --- | --- | --- |
 | `FIVE11_API_KEY` | backend `.env` | Token from [511 Open Data](https://511.org/open-data) |
-| `MAPS_API_KEY` | `android/local.properties` | Google Maps SDK key |
+| `MAPBOX_ACCESS_TOKEN` | `android/local.properties` | Mapbox public token (`pk.…`) for the app |
+| `MAPBOX_DOWNLOADS_TOKEN` | `android/local.properties` | Optional secret token (`sk.…`) with `DOWNLOADS:READ` for Gradle |
 | `BAYWATCH_API_BASE_URL` | `android/local.properties` | Backend base URL |
 
 ## Zone colors (Pulse UI)

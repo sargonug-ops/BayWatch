@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,17 +43,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.baywatch.app.ui.map.components.ZoneLegend
 import com.baywatch.app.ui.map.components.ZonePolygonOverlay
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
-import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.rememberCameraPositionState
+import com.mapbox.geojson.Point
+import com.mapbox.maps.extension.compose.MapboxMap
+import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
+import com.mapbox.maps.plugin.locationcomponent.createDefault2DPuck
+import com.mapbox.maps.plugin.locationcomponent.location
+import com.mapbox.maps.extension.compose.MapEffect
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-private val SF_CENTER = LatLng(37.7749, -122.4194)
+private val SF_CENTER = Point.fromLngLat(-122.4194, 37.7749)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,26 +89,40 @@ fun MapScreen(viewModel: MapViewModel = viewModel()) {
         viewModel.startAutoRefresh()
     }
 
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(SF_CENTER, 12f)
+    val mapViewportState = rememberMapViewportState {
+        setCameraOptions {
+            center(SF_CENTER)
+            zoom(12.0)
+            pitch(0.0)
+            bearing(0.0)
+        }
     }
 
     var showAlerts by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
     Box(modifier = Modifier.fillMaxSize()) {
-        GoogleMap(
+        MapboxMap(
             modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-            properties = MapProperties(
-                isMyLocationEnabled = hasLocation,
-                mapType = MapType.NORMAL,
-            ),
-            uiSettings = MapUiSettings(
-                zoomControlsEnabled = false,
-                myLocationButtonEnabled = true,
-            ),
+            mapViewportState = mapViewportState,
+            style = {
+                MapboxStandardStyle(
+                    standardStyleState = rememberStandardStyleState {
+                        configurationsState.apply {
+                            theme = ThemeValue.MONOCHROME
+                        }
+                    },
+                )
+            },
         ) {
+            MapEffect(hasLocation) { mapView ->
+                mapView.location.updateSettings {
+                    enabled = hasLocation
+                    pulsingEnabled = true
+                    locationPuck = createDefault2DPuck(withBearing = true)
+                }
+            }
+
             uiState.mapState?.zones?.forEach { zone ->
                 ZonePolygonOverlay(zone = zone)
             }

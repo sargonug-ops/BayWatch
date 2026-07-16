@@ -25,15 +25,14 @@ android {
         versionCode = 1
         versionName = "0.1.0"
 
-        val mapsKey = localProperties.getProperty("MAPS_API_KEY")
-            ?: project.findProperty("MAPS_API_KEY") as String?
-            ?: "YOUR_MAPS_API_KEY"
+        val mapboxToken = localProperties.getProperty("MAPBOX_ACCESS_TOKEN")
+            ?: project.findProperty("MAPBOX_ACCESS_TOKEN") as String?
+            ?: "YOUR_MAPBOX_ACCESS_TOKEN"
         val apiBase = localProperties.getProperty("BAYWATCH_API_BASE_URL")
             ?: project.findProperty("BAYWATCH_API_BASE_URL") as String?
             ?: "http://10.0.2.2:3000"
-        buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
         buildConfigField("String", "BAYWATCH_API_BASE_URL", "\"$apiBase\"")
-        manifestPlaceholders["MAPS_API_KEY"] = mapsKey
+        resValue("string", "mapbox_access_token", mapboxToken)
     }
 
     buildFeatures {
@@ -70,8 +69,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation(libs.maps.compose)
-    implementation(libs.play.services.maps)
+    implementation(libs.mapbox.android)
+    implementation(libs.mapbox.compose)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlinx.serialization)
