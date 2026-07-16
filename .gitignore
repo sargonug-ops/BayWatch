@@ -1,0 +1,10 @@
+# Add project-specific ignores.
+.DS_Store
+.idea/
+*.log
+backend/node_modules/
+backend/.env
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/

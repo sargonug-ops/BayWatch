@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#0B0F14</color>
+    <color name="ic_launcher_foreground">#4CC9F0</color>
+    <color name="pulse_background">#0B0F14</color>
+    <color name="zone_road_closure">#FF8C42</color>
+    <color name="zone_traffic_event">#E63946</color>
+    <color name="zone_school">#FFD166</color>
+    <color name="zone_transit">#4CC9F0</color>
+</resources>

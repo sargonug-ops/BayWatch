@@ -1,0 +1,5 @@
+# Copy to local.properties (gitignored). Never commit real tokens.
+MAPBOX_ACCESS_TOKEN=YOUR_MAPBOX_PUBLIC_TOKEN
+# Optional: secret token with DOWNLOADS:READ for Gradle; defaults to MAPBOX_ACCESS_TOKEN
+MAPBOX_DOWNLOADS_TOKEN=YOUR_MAPBOX_SECRET_TOKEN
+BAYWATCH_API_BASE_URL=http://10.0.2.2:3000
