@@ -1,0 +1,1266 @@
+{
+  "version": 1,
+  "source": "https://data.sfgov.org/Economy-and-Community/Schools/7e7j-59qk",
+  "schools": [
+    {
+      "id": "academy-(the)--sf-@mcateer",
+      "name": "Academy (The)- SF @McAteer",
+      "lat": 37.745874,
+      "lng": -122.449984,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Alternative Schools of Choice",
+      "address": "555 Portola Dr."
+    },
+    {
+      "id": "alamo-elementary",
+      "name": "Alamo Elementary",
+      "lat": 37.783124,
+      "lng": -122.482191,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "250 23rd Ave."
+    },
+    {
+      "id": "alvarado-elementary",
+      "name": "Alvarado Elementary",
+      "lat": 37.753675,
+      "lng": -122.438734,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "625 Douglas St."
+    },
+    {
+      "id": "aptos-middle",
+      "name": "Aptos Middle",
+      "lat": 37.730234,
+      "lng": -122.466233,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "105 Aptos Ave."
+    },
+    {
+      "id": "argonne-elementary",
+      "name": "Argonne Elementary",
+      "lat": 37.77515,
+      "lng": -122.476799,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "680 18th Ave."
+    },
+    {
+      "id": "asawa-(ruth)-sf-sch-of-the-arts,-a-public-school",
+      "name": "Asawa (Ruth) SF Sch of the Arts, A Public School",
+      "lat": 37.745874,
+      "lng": -122.449984,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Alternative Schools of Choice",
+      "address": "555 Portola Dr."
+    },
+    {
+      "id": "balboa-high",
+      "name": "Balboa High",
+      "lat": 37.722073,
+      "lng": -122.439853,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "1000 Cayuga Ave."
+    },
+    {
+      "id": "brown-jr.-(willie-l)-middle",
+      "name": "Brown Jr. (Willie L) Middle",
+      "lat": 37.735911,
+      "lng": -122.399692,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "2055 Silver Ave."
+    },
+    {
+      "id": "bryant-elementary",
+      "name": "Bryant Elementary",
+      "lat": 37.751628,
+      "lng": -122.404906,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2641 25th St."
+    },
+    {
+      "id": "buena-vista--horace-mann-k-8",
+      "name": "Buena Vista/ Horace Mann K-8",
+      "lat": 37.753715,
+      "lng": -122.419745,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "3351 23rd St."
+    },
+    {
+      "id": "burton-(phillip-and-sala)-academic-high",
+      "name": "Burton (Phillip and Sala) Academic High",
+      "lat": 37.720698,
+      "lng": -122.405071,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "400 Mansell St."
+    },
+    {
+      "id": "carmichael-(bessie)-fec",
+      "name": "Carmichael (Bessie)/FEC",
+      "lat": 37.775856,
+      "lng": -122.406742,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "375 Seventh St."
+    },
+    {
+      "id": "carver-(george-washington)-elementary",
+      "name": "Carver (George Washington) Elementary",
+      "lat": 37.732403,
+      "lng": -122.386385,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1360 Oakdale Ave."
+    },
+    {
+      "id": "chavez-(cesar)-elementary",
+      "name": "Chavez (Cesar) Elementary",
+      "lat": 37.75488,
+      "lng": -122.415419,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "825 Shotwell St."
+    },
+    {
+      "id": "chin-(john-yehall)-elementary",
+      "name": "Chin (John Yehall) Elementary",
+      "lat": 37.79831,
+      "lng": -122.403175,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "350 Broadway St."
+    },
+    {
+      "id": "chinese-immersion-school-at-deavila",
+      "name": "Chinese Immersion School at DeAvila",
+      "lat": 37.769464,
+      "lng": -122.444292,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1250 Waller St."
+    },
+    {
+      "id": "city-arts-&-leadership-academy",
+      "name": "City Arts & Leadership Academy",
+      "lat": 37.721751,
+      "lng": -122.444866,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "350 Seneca Ave."
+    },
+    {
+      "id": "clarendon-alternative-elementary",
+      "name": "Clarendon Alternative Elementary",
+      "lat": 37.752989,
+      "lng": -122.456111,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "500 Clarendon Ave."
+    },
+    {
+      "id": "cleveland-elementary",
+      "name": "Cleveland Elementary",
+      "lat": 37.720733,
+      "lng": -122.429048,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "455 Athens St."
+    },
+    {
+      "id": "cobb-(william-l.)-elementary",
+      "name": "Cobb (William L.) Elementary",
+      "lat": 37.788174,
+      "lng": -122.439189,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2725 California St."
+    },
+    {
+      "id": "cooper-(sarah-b.)-children-center",
+      "name": "Cooper (Sarah B.) Children Center",
+      "lat": 37.800719,
+      "lng": -122.414845,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "940 Filbert St."
+    },
+    {
+      "id": "creative-arts-charter",
+      "name": "Creative Arts Charter",
+      "lat": 37.78003,
+      "lng": -122.435434,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1601 Turk St."
+    },
+    {
+      "id": "denman-(james)-middle",
+      "name": "Denman (James) Middle",
+      "lat": 37.721993,
+      "lng": -122.443314,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "241 Oneida Ave."
+    },
+    {
+      "id": "downtown-high",
+      "name": "Downtown High",
+      "lat": 37.760939,
+      "lng": -122.404072,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Continuation High Schools",
+      "address": "693 Vermont St."
+    },
+    {
+      "id": "drew-(charles)-college-preparatory-academy",
+      "name": "Drew (Charles) College Preparatory Academy",
+      "lat": 37.731779,
+      "lng": -122.39355,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "50 Pomona Ave."
+    },
+    {
+      "id": "el-dorado-elementary",
+      "name": "El Dorado Elementary",
+      "lat": 37.719265,
+      "lng": -122.406737,
+      "lowGrade": "P",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "70 Delta St."
+    },
+    {
+      "id": "everett-middle",
+      "name": "Everett Middle",
+      "lat": 37.763667,
+      "lng": -122.428581,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "450 Church St."
+    },
+    {
+      "id": "feinstein-(dianne)-elementary",
+      "name": "Feinstein (Dianne) Elementary",
+      "lat": 37.739964,
+      "lng": -122.481857,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2550 25th Ave."
+    },
+    {
+      "id": "five-keys-charter-(sf-sheriff's)",
+      "name": "Five Keys Charter (SF Sheriff's)",
+      "lat": 37.777211,
+      "lng": -122.402165,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "70 Oak Grove St."
+    },
+    {
+      "id": "five-keys-independence-hs-(sf-sheriff's)",
+      "name": "Five Keys Independence HS (SF Sheriff's)",
+      "lat": 37.77717,
+      "lng": -122.40214,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "70 Oak Grove"
+    },
+    {
+      "id": "flynn-(leonard-r.)-elementary",
+      "name": "Flynn (Leonard R.) Elementary",
+      "lat": 37.74819,
+      "lng": -122.412037,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "3125 Cesar Chavez St."
+    },
+    {
+      "id": "francisco-middle",
+      "name": "Francisco Middle",
+      "lat": 37.804816,
+      "lng": -122.411689,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "2190 Powell St."
+    },
+    {
+      "id": "galileo-high",
+      "name": "Galileo High",
+      "lat": 37.803401,
+      "lng": -122.424082,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "1150 Francisco St."
+    },
+    {
+      "id": "garfield-elementary",
+      "name": "Garfield Elementary",
+      "lat": 37.8018,
+      "lng": -122.406734,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "420 Filbert St."
+    },
+    {
+      "id": "gateway-high",
+      "name": "Gateway High",
+      "lat": 37.783129,
+      "lng": -122.437739,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "1430 Scott St."
+    },
+    {
+      "id": "gateway-middle",
+      "name": "Gateway Middle",
+      "lat": 37.779439,
+      "lng": -122.436008,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "1512 Golden Gate Ave."
+    },
+    {
+      "id": "giannini-(a.p.)-middle",
+      "name": "Giannini (A.P.) Middle",
+      "lat": 37.751425,
+      "lng": -122.497022,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "3151 Ortega St."
+    },
+    {
+      "id": "glen-park-elementary",
+      "name": "Glen Park Elementary",
+      "lat": 37.733107,
+      "lng": -122.436088,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "151 Lippard Ave."
+    },
+    {
+      "id": "grattan-elementary",
+      "name": "Grattan Elementary",
+      "lat": 37.763858,
+      "lng": -122.450526,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "165 Grattan St."
+    },
+    {
+      "id": "guadalupe-elementary",
+      "name": "Guadalupe Elementary",
+      "lat": 37.710438,
+      "lng": -122.434416,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "859 Prague St."
+    },
+    {
+      "id": "harte-(bret)-elementary",
+      "name": "Harte (Bret) Elementary",
+      "lat": 37.71861,
+      "lng": -122.388897,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1035 Gilman Ave."
+    },
+    {
+      "id": "havard-(leola-m.)-early-education",
+      "name": "Havard (Leola M.) Early Education",
+      "lat": 37.733772,
+      "lng": -122.388876,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "1520 Oakdale Ave."
+    },
+    {
+      "id": "hillcrest-elementary",
+      "name": "Hillcrest Elementary",
+      "lat": 37.729026,
+      "lng": -122.419248,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "810 Silver Ave."
+    },
+    {
+      "id": "hoover-(herbert)-middle",
+      "name": "Hoover (Herbert) Middle",
+      "lat": 37.74535,
+      "lng": -122.47031,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "2290 14th Ave."
+    },
+    {
+      "id": "huerta-(dolores)-elementary",
+      "name": "Huerta (Dolores) Elementary",
+      "lat": 37.740659,
+      "lng": -122.425596,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "65 Chenery St."
+    },
+    {
+      "id": "independence-high",
+      "name": "Independence High",
+      "lat": 37.763243,
+      "lng": -122.463826,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Alternative Schools of Choice",
+      "address": "1350 7th Ave."
+    },
+    {
+      "id": "jefferson-elementary",
+      "name": "Jefferson Elementary",
+      "lat": 37.763555,
+      "lng": -122.476359,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1725 Irving St."
+    },
+    {
+      "id": "jordan-(june)-school-for-equity",
+      "name": "Jordan (June) School for Equity",
+      "lat": 37.719997,
+      "lng": -122.425502,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Alternative Schools of Choice",
+      "address": "325 La Grande Ave."
+    },
+    {
+      "id": "key-(francis-scott)-elementary",
+      "name": "Key (Francis Scott) Elementary",
+      "lat": 37.758154,
+      "lng": -122.502495,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1530 43rd Ave."
+    },
+    {
+      "id": "king-(thomas-starr)-elementary",
+      "name": "King (Thomas Starr) Elementary",
+      "lat": 37.752765,
+      "lng": -122.399351,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1215 Carolina St."
+    },
+    {
+      "id": "king-jr.-(martin-luther)-academic-middle",
+      "name": "King Jr. (Martin Luther) Academic Middle",
+      "lat": 37.727948,
+      "lng": -122.404917,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "350 Girard St."
+    },
+    {
+      "id": "kipp-bayview-academy",
+      "name": "KIPP Bayview Academy",
+      "lat": 37.71952,
+      "lng": -122.396374,
+      "lowGrade": "5",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "1060 Key Ave."
+    },
+    {
+      "id": "kipp-san-francisco-bay-academy",
+      "name": "KIPP San Francisco Bay Academy",
+      "lat": 37.783165,
+      "lng": -122.43759,
+      "lowGrade": "5",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "1430 Scott St., Third Fl."
+    },
+    {
+      "id": "kipp-san-francisco-college-preparatory",
+      "name": "KIPP San Francisco College Preparatory",
+      "lat": 37.732378,
+      "lng": -122.382356,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "1195 Hudson Ave."
+    },
+    {
+      "id": "lafayette-elementary",
+      "name": "Lafayette Elementary",
+      "lat": 37.777608,
+      "lng": -122.496889,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "4545 Anza St."
+    },
+    {
+      "id": "lakeshore-alternative-elementary",
+      "name": "Lakeshore Alternative Elementary",
+      "lat": 37.730603,
+      "lng": -122.486151,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "220 Middlefield Dr."
+    },
+    {
+      "id": "las-americas-children-center",
+      "name": "Las Americas Children Center",
+      "lat": 37.757128,
+      "lng": -122.412659,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "801 Treat Ave."
+    },
+    {
+      "id": "lau-(gordon-j.)-elementary",
+      "name": "Lau (Gordon J.) Elementary",
+      "lat": 37.793981,
+      "lng": -122.408687,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "950 Clay St."
+    },
+    {
+      "id": "lawton-alternative",
+      "name": "Lawton Alternative",
+      "lat": 37.757952,
+      "lng": -122.489587,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1570 31st Ave."
+    },
+    {
+      "id": "lee-(edwin-and-anita)-newcomer",
+      "name": "Lee (Edwin and Anita) Newcomer",
+      "lat": 37.794905,
+      "lng": -122.404146,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "657 Merchant St."
+    },
+    {
+      "id": "lick-(james)-middle",
+      "name": "Lick (James) Middle",
+      "lat": 37.749543,
+      "lng": -122.431754,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "1220 Noe St."
+    },
+    {
+      "id": "life-learning-academy-charter",
+      "name": "Life Learning Academy Charter",
+      "lat": 37.77091,
+      "lng": -122.404797,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "651 Eighth St., Bldg. 229 Treasure Island"
+    },
+    {
+      "id": "lilienthal-(claire)-elementary",
+      "name": "Lilienthal (Claire) Elementary",
+      "lat": 37.803192,
+      "lng": -122.443502,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "3630 Divisadero St."
+    },
+    {
+      "id": "lincoln-(abraham)-high",
+      "name": "Lincoln (Abraham) High",
+      "lat": 37.747259,
+      "lng": -122.481322,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "2162 24th Ave."
+    },
+    {
+      "id": "longfellow-elementary",
+      "name": "Longfellow Elementary",
+      "lat": 37.71046,
+      "lng": -122.447692,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "755 Morse St."
+    },
+    {
+      "id": "lowell-high",
+      "name": "Lowell High",
+      "lat": 37.731044,
+      "lng": -122.483559,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "1101 Eucalyptus Dr."
+    },
+    {
+      "id": "mahler-(theresa-s.)-children-center",
+      "name": "Mahler (Theresa S.) Children Center",
+      "lat": 37.755547,
+      "lng": -122.428001,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "990 Church St."
+    },
+    {
+      "id": "malcolm-x-academy",
+      "name": "Malcolm X Academy",
+      "lat": 37.733734,
+      "lng": -122.380617,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "350 Harbor Rd."
+    },
+    {
+      "id": "marina-middle",
+      "name": "Marina Middle",
+      "lat": 37.801671,
+      "lng": -122.43636,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "3500 Fillmore St."
+    },
+    {
+      "id": "marshall-(thurgood)-high",
+      "name": "Marshall (Thurgood) High",
+      "lat": 37.735717,
+      "lng": -122.401881,
+      "lowGrade": "8",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "45 Conkling St."
+    },
+    {
+      "id": "marshall-elementary",
+      "name": "Marshall Elementary",
+      "lat": 37.766679,
+      "lng": -122.419099,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1575 15th St."
+    },
+    {
+      "id": "mccoppin-(frank)-elementary",
+      "name": "McCoppin (Frank) Elementary",
+      "lat": 37.776283,
+      "lng": -122.464018,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "651 Sixth Ave."
+    },
+    {
+      "id": "mckinley-elementary",
+      "name": "McKinley Elementary",
+      "lat": 37.767229,
+      "lng": -122.436594,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1025 14th St."
+    },
+    {
+      "id": "mclaren-(john)-children-centers",
+      "name": "McLaren (John) Children Centers",
+      "lat": 37.713557,
+      "lng": -122.421911,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "2055 Sunnydale Ave."
+    },
+    {
+      "id": "milk-(harvey)-civil-rights-elementary",
+      "name": "Milk (Harvey) Civil Rights Elementary",
+      "lat": 37.759148,
+      "lng": -122.43634,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "4235 19th St."
+    },
+    {
+      "id": "miraloma-elementary",
+      "name": "Miraloma Elementary",
+      "lat": 37.739309,
+      "lng": -122.450214,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "175 Omar Way"
+    },
+    {
+      "id": "mission-bay-elementary",
+      "name": "Mission Bay Elementary",
+      "lat": 37.769858,
+      "lng": -122.395224,
+      "lowGrade": "P",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1415 Owens St."
+    },
+    {
+      "id": "mission-education-center",
+      "name": "Mission Education Center",
+      "lat": 37.742282,
+      "lng": -122.431061,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1670 Noe St."
+    },
+    {
+      "id": "mission-high",
+      "name": "Mission High",
+      "lat": 37.761403,
+      "lng": -122.427287,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "3750 18th St."
+    },
+    {
+      "id": "mission-preparatory",
+      "name": "Mission Preparatory",
+      "lat": 37.755441,
+      "lng": -122.408574,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1050 York St."
+    },
+    {
+      "id": "monroe-elementary",
+      "name": "Monroe Elementary",
+      "lat": 37.725224,
+      "lng": -122.430121,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "260 Madrid St."
+    },
+    {
+      "id": "moscone-(george-r.)-elementary",
+      "name": "Moscone (George R.) Elementary",
+      "lat": 37.756242,
+      "lng": -122.412303,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2576 Harrison St."
+    },
+    {
+      "id": "muir-(john)-elementary",
+      "name": "Muir (John) Elementary",
+      "lat": 37.773688,
+      "lng": -122.429094,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "380 Webster St."
+    },
+    {
+      "id": "new-traditions-elementary",
+      "name": "New Traditions Elementary",
+      "lat": 37.77431,
+      "lng": -122.450324,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2049 Grove St."
+    },
+    {
+      "id": "noriega-children-center",
+      "name": "Noriega Children Center",
+      "lat": 37.753466,
+      "lng": -122.503387,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "1775 44th Ave."
+    },
+    {
+      "id": "o'connell-(john)-high",
+      "name": "O'Connell (John) High",
+      "lat": 37.759631,
+      "lng": -122.414687,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "2355 Folsom St."
+    },
+    {
+      "id": "ortega-(jose)-elementary",
+      "name": "Ortega (Jose) Elementary",
+      "lat": 37.716168,
+      "lng": -122.466259,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "400 Sargent St."
+    },
+    {
+      "id": "parker-(jean)-elementary",
+      "name": "Parker (Jean) Elementary",
+      "lat": 37.797323,
+      "lng": -122.411105,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "840 Broadway St."
+    },
+    {
+      "id": "parks-(rosa)-elementary",
+      "name": "Parks (Rosa) Elementary",
+      "lat": 37.783681,
+      "lng": -122.429454,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1501 O'Farrell St."
+    },
+    {
+      "id": "peabody-(george)-elementary",
+      "name": "Peabody (George) Elementary",
+      "lat": 37.783947,
+      "lng": -122.464567,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "251 Sixth Ave."
+    },
+    {
+      "id": "presidio-early-ed.",
+      "name": "Presidio Early Ed.",
+      "lat": 37.797684,
+      "lng": -122.461075,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "387 Moraga Ave."
+    },
+    {
+      "id": "presidio-middle",
+      "name": "Presidio Middle",
+      "lat": 37.780831,
+      "lng": -122.490102,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "450 30th Ave."
+    },
+    {
+      "id": "redding-elementary",
+      "name": "Redding Elementary",
+      "lat": 37.789726,
+      "lng": -122.419215,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1421 Pine St."
+    },
+    {
+      "id": "revere-(paul)-elementary",
+      "name": "Revere (Paul) Elementary",
+      "lat": 37.737142,
+      "lng": -122.413174,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "555 Tompkins Ave."
+    },
+    {
+      "id": "rooftop-elementary",
+      "name": "Rooftop Elementary",
+      "lat": 37.754418,
+      "lng": -122.443888,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "443 Burnett Ave."
+    },
+    {
+      "id": "roosevelt-middle",
+      "name": "Roosevelt Middle",
+      "lat": 37.782249,
+      "lng": -122.458952,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "460 Arguello Blvd."
+    },
+    {
+      "id": "s.f.-international-high",
+      "name": "S.F. International High",
+      "lat": 37.76172,
+      "lng": -122.400623,
+      "lowGrade": "8",
+      "highGrade": "12",
+      "entityType": "Alternative Schools of Choice",
+      "address": "655 DeHaro St."
+    },
+    {
+      "id": "san-francisco-community-alternative",
+      "name": "San Francisco Community Alternative",
+      "lat": 37.725815,
+      "lng": -122.432624,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "125 Excelsior Ave."
+    },
+    {
+      "id": "san-francisco-public-montessori",
+      "name": "San Francisco Public Montessori",
+      "lat": 37.792616,
+      "lng": -122.433547,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2340 Jackson St."
+    },
+    {
+      "id": "san-miguel-children-center",
+      "name": "San Miguel Children Center",
+      "lat": 37.721211,
+      "lng": -122.444754,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "300 Seneca Ave."
+    },
+    {
+      "id": "sanchez-elementary",
+      "name": "Sanchez Elementary",
+      "lat": 37.763967,
+      "lng": -122.430768,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "325 Sanchez St."
+    },
+    {
+      "id": "serra-(junipero)-elementary",
+      "name": "Serra (Junipero) Elementary",
+      "lat": 37.736733,
+      "lng": -122.421137,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "625 Holly Park Cir."
+    },
+    {
+      "id": "sheridan-elementary",
+      "name": "Sheridan Elementary",
+      "lat": 37.714331,
+      "lng": -122.459134,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "431 Capitol Ave."
+    },
+    {
+      "id": "sherman-elementary",
+      "name": "Sherman Elementary",
+      "lat": 37.798273,
+      "lng": -122.426203,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1651 Union St."
+    },
+    {
+      "id": "sloat-(commodore)-elementary",
+      "name": "Sloat (Commodore) Elementary",
+      "lat": 37.731881,
+      "lng": -122.470965,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "50 Darien Way"
+    },
+    {
+      "id": "spring-valley-elementary",
+      "name": "Spring Valley Elementary",
+      "lat": 37.794403,
+      "lng": -122.418992,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1451 Jackson St."
+    },
+    {
+      "id": "stevenson-(robert-louis)-elementary",
+      "name": "Stevenson (Robert Louis) Elementary",
+      "lat": 37.748857,
+      "lng": -122.4923,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2051 34th Ave."
+    },
+    {
+      "id": "stockton-(commodore)-children-center",
+      "name": "Stockton (Commodore) Children Center",
+      "lat": 37.795046,
+      "lng": -122.408832,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "1 Trenton St."
+    },
+    {
+      "id": "sunnyside-elementary",
+      "name": "Sunnyside Elementary",
+      "lat": 37.730307,
+      "lng": -122.448794,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "250 Foerster St."
+    },
+    {
+      "id": "sunset-elementary",
+      "name": "Sunset Elementary",
+      "lat": 37.750743,
+      "lng": -122.499799,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1920 41st Ave."
+    },
+    {
+      "id": "sutro-elementary",
+      "name": "Sutro Elementary",
+      "lat": 37.783932,
+      "lng": -122.471025,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "235 12th Ave."
+    },
+    {
+      "id": "taylor-(edward-r.)-elementary",
+      "name": "Taylor (Edward R.) Elementary",
+      "lat": 37.728,
+      "lng": -122.407332,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "423 Burrows St."
+    },
+    {
+      "id": "tenderloin-community",
+      "name": "Tenderloin Community",
+      "lat": 37.782061,
+      "lng": -122.419799,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "627 Turk St."
+    },
+    {
+      "id": "thomas-edison-charter-academy",
+      "name": "Thomas Edison Charter Academy",
+      "lat": 37.754937,
+      "lng": -122.426202,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "3531 22nd St."
+    },
+    {
+      "id": "tule-elk-park-children-center",
+      "name": "Tule Elk Park Children Center",
+      "lat": 37.799407,
+      "lng": -122.434534,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "2110 Greenwich St."
+    },
+    {
+      "id": "ulloa-elementary",
+      "name": "Ulloa Elementary",
+      "lat": 37.737302,
+      "lng": -122.499954,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2650 42nd Ave."
+    },
+    {
+      "id": "visitacion-valley-elementary",
+      "name": "Visitacion Valley Elementary",
+      "lat": 37.71268,
+      "lng": -122.410365,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "55 Schwerin St."
+    },
+    {
+      "id": "visitacion-valley-middle",
+      "name": "Visitacion Valley Middle",
+      "lat": 37.715632,
+      "lng": -122.412417,
+      "lowGrade": "6",
+      "highGrade": "8",
+      "entityType": "Intermediate/Middle Schools (Public)",
+      "address": "1971 Visitacion Ave."
+    },
+    {
+      "id": "wallenberg-(raoul)-traditional-high",
+      "name": "Wallenberg (Raoul) Traditional High",
+      "lat": 37.780171,
+      "lng": -122.445755,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "40 Vega St."
+    },
+    {
+      "id": "washington-(george)-high",
+      "name": "Washington (George) High",
+      "lat": 37.777781,
+      "lng": -122.492032,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "High Schools (Public)",
+      "address": "600 32nd Ave."
+    },
+    {
+      "id": "webster-(daniel)-elementary",
+      "name": "Webster (Daniel) Elementary",
+      "lat": 37.760489,
+      "lng": -122.396236,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "465 Missouri St."
+    },
+    {
+      "id": "weill-(raphael)-children-center",
+      "name": "Weill (Raphael) Children Center",
+      "lat": 37.783512,
+      "lng": -122.430134,
+      "lowGrade": "P",
+      "highGrade": "P",
+      "entityType": "Preschool",
+      "address": "1501 O'Farrell St."
+    },
+    {
+      "id": "wells-(ida-b.)-high",
+      "name": "Wells (Ida B.) High",
+      "lat": 37.775392,
+      "lng": -122.434461,
+      "lowGrade": "9",
+      "highGrade": "12",
+      "entityType": "Continuation High Schools",
+      "address": "1099 Hayes St."
+    },
+    {
+      "id": "west-portal-elementary",
+      "name": "West Portal Elementary",
+      "lat": 37.743572,
+      "lng": -122.464683,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "5 Lenox Way"
+    },
+    {
+      "id": "yick-wo-elementary",
+      "name": "Yick Wo Elementary",
+      "lat": 37.801906,
+      "lng": -122.416304,
+      "lowGrade": "K",
+      "highGrade": "5",
+      "entityType": "Elementary Schools (Public)",
+      "address": "2245 Jones St."
+    },
+    {
+      "id": "yu-(alice-fong)-elementary",
+      "name": "Yu (Alice Fong) Elementary",
+      "lat": 37.759405,
+      "lng": -122.469314,
+      "lowGrade": "K",
+      "highGrade": "8",
+      "entityType": "Elementary Schools (Public)",
+      "address": "1541 12th Ave."
+    }
+  ]
+}
