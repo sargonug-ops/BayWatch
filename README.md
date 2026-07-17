@@ -53,6 +53,7 @@ School data is bundled from [DataSF Schools](https://data.sfgov.org/Economy-and-
 cd backend
 cp .env.example .env   # add FIVE11_API_KEY from https://511.org/open-data
 npm install
+npm run validate:511   # live smoke test against 511 (requires API key)
 npm run dev
 ```
 
