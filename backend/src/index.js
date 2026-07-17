@@ -68,5 +68,7 @@ server.listen(port, () => {
   console.log(`Bay-Watch backend listening on http://localhost:${port}`);
   if (!apiKey || apiKey === "your_511_api_key_here") {
     console.log("FIVE11_API_KEY not set — serving demo state with school zones only.");
+  } else {
+    console.log("FIVE11_API_KEY detected — serving live 511 WZDx / events / GTFS-RT alerts.");
   }
 });

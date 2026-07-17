@@ -1,15 +1,38 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { FIVE11_BASE } from "./config.js";
+import GtfsRealtimeBindings from "gtfs-realtime-bindings";
+import {
+  FIVE11_BASE,
+  SF_TRANSIT_AGENCIES,
+  SF_TRANSIT_AGENCY_CODES,
+} from "./config.js";
 import { geometryIntersectsSf, circlePolygon, isSchoolZoneWindowActive } from "./geo.js";
-import { SF_TRANSIT_AGENCIES } from "./config.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const schoolsPath = join(__dirname, "../data/schools_sf.json");
 
 /** @type {{ version: number, schools: Array<{ id: string, name: string, lat: number, lng: number }> }} */
 const schoolsBundle = JSON.parse(readFileSync(schoolsPath, "utf8"));
+
+/**
+ * Parse 511 JSON responses, stripping a leading UTF-8 BOM when present.
+ * @param {Response} response
+ */
+async function parse511Json(response) {
+  const text = await response.text();
+  return JSON.parse(text.replace(/^\uFEFF/, ""));
+}
+
+/**
+ * Drop GeoJSON CRS objects that some Mapbox consumers reject.
+ * @param {unknown} geometry
+ */
+function normalizeGeometry(geometry) {
+  if (!geometry || typeof geometry !== "object") return geometry;
+  const { crs: _crs, ...rest } = /** @type {Record<string, unknown>} */ (geometry);
+  return rest;
+}
 
 /**
  * @param {string} apiKey
@@ -24,34 +47,42 @@ async function fetch511(apiKey, path) {
     const body = await response.text();
     throw new Error(`511 ${path} failed: ${response.status} ${body.slice(0, 200)}`);
   }
-  return response.json();
+  return parse511Json(response);
 }
 
 /**
  * @param {unknown} wzdx
  * @returns {Array<Record<string, unknown>>}
  */
-function mapWzdxZones(wzdx) {
+export function mapWzdxZones(wzdx) {
   const features = wzdx?.features ?? wzdx?.road_events ?? [];
   if (!Array.isArray(features)) return [];
 
   return features
     .map((feature, index) => {
-      const geometry = feature.geometry ?? feature.core_details?.location?.shape;
+      const geometry = normalizeGeometry(
+        feature.geometry ?? feature.core_details?.location?.shape
+      );
       if (!geometryIntersectsSf(geometry)) return null;
 
       const props = feature.properties ?? feature;
-      const id = props.id ?? props.work_zone_id ?? `wzdx-${index}`;
+      const core = props.core_details ?? {};
+      const id = feature.id ?? props.id ?? props.work_zone_id ?? `wzdx-${index}`;
+      const roadNames = core.road_names ?? props.road_names;
       return {
         id: String(id),
         type: "ROAD_CLOSURE",
-        title: props.road_names?.join?.(" & ") ?? props.name ?? "Road closure",
+        title: Array.isArray(roadNames)
+          ? roadNames.join(" & ")
+          : (props.name ?? core.name ?? "Road closure"),
         summary:
+          core.description ??
           props.description ??
           props.event_status ??
+          core.event_type ??
           props.vehicle_impact ??
           "Active work zone",
-        severity: props.severity ?? 2,
+        severity: Number(props.severity ?? core.severity ?? 2) || 2,
         geometry,
         source: "511-wzdx",
         activeUntil: props.end_date ?? props.end_time ?? null,
@@ -64,13 +95,14 @@ function mapWzdxZones(wzdx) {
  * @param {unknown} eventsPayload
  * @returns {Array<Record<string, unknown>>}
  */
-function mapTrafficEvents(eventsPayload) {
+export function mapTrafficEvents(eventsPayload) {
   const events = eventsPayload?.events ?? eventsPayload ?? [];
   if (!Array.isArray(events)) return [];
 
   return events
     .map((event, index) => {
-      const geometry =
+      const rawGeometry =
+        event.geography ??
         event.closure_geometry ??
         event.geo?.geometry ??
         (event.latitude && event.longitude
@@ -80,6 +112,7 @@ function mapTrafficEvents(eventsPayload) {
             }
           : null);
 
+      const geometry = normalizeGeometry(rawGeometry);
       if (!geometryIntersectsSf(geometry)) return null;
 
       let zoneGeometry = geometry;
@@ -88,12 +121,19 @@ function mapTrafficEvents(eventsPayload) {
         zoneGeometry = circlePolygon(lat, lng, 120);
       }
 
+      const severityRaw = event.severity ?? event.priority ?? 2;
+      const severity =
+        typeof severityRaw === "number"
+          ? severityRaw
+          : Number.parseInt(String(severityRaw), 10) || 2;
+
       return {
         id: String(event.id ?? event.event_id ?? `event-${index}`),
         type: "TRAFFIC_EVENT",
         title: event.event_type ?? event.type ?? "Traffic event",
-        summary: event.description ?? event.location ?? "Highway incident",
-        severity: Number(event.severity ?? event.priority ?? 2),
+        summary:
+          event.headline ?? event.description ?? event.location ?? "Highway incident",
+        severity,
         geometry: zoneGeometry,
         source: "511-traffic-events",
         activeUntil: event.end_date ?? event.end_time ?? null,
@@ -103,68 +143,115 @@ function mapTrafficEvents(eventsPayload) {
 }
 
 /**
- * Best-effort GTFS-RT alert extraction without full protobuf schema.
  * @param {string} apiKey
  */
-async function fetchTransitAlerts(apiKey) {
+export async function fetchTransitAlerts(apiKey) {
   const url = `${FIVE11_BASE}/transit/servicealerts?api_key=${apiKey}&agency=RG`;
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    headers: { Accept: "application/x-protobuf, application/json" },
+  });
   if (!response.ok) {
     return [];
   }
 
   const contentType = response.headers.get("content-type") ?? "";
   if (contentType.includes("json")) {
-    const json = await response.json();
+    const json = await parse511Json(response);
     return mapTransitAlertsJson(json);
   }
 
-  // Protobuf feed: surface a placeholder until gtfs-realtime-bindings is added.
-  return [];
+  const buffer = new Uint8Array(await response.arrayBuffer());
+  const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
+  return mapTransitAlertsProtobuf(feed);
 }
 
 /**
  * @param {unknown} json
  */
-function mapTransitAlertsJson(json) {
+export function mapTransitAlertsJson(json) {
   const entities = json?.entity ?? json?.entities ?? [];
   if (!Array.isArray(entities)) return [];
+  return entities.map(mapAlertEntity).filter(Boolean);
+}
 
-  return entities
-    .map((entity, index) => {
-      const alert = entity.alert ?? entity.service_alert;
-      if (!alert) return null;
+/**
+ * @param {{ entity?: Array<unknown> }} feed
+ */
+export function mapTransitAlertsProtobuf(feed) {
+  const entities = feed?.entity ?? [];
+  if (!Array.isArray(entities)) return [];
+  return entities.map(mapAlertEntity).filter(Boolean);
+}
 
-      const header =
-        alert.header_text?.translation?.[0]?.text ??
-        alert.headerText?.translation?.[0]?.text ??
-        "Transit alert";
-      const description =
-        alert.description_text?.translation?.[0]?.text ??
-        alert.descriptionText?.translation?.[0]?.text ??
-        "";
+/**
+ * @param {unknown} entity
+ * @param {number} index
+ */
+function mapAlertEntity(entity, index) {
+  const alert = entity?.alert ?? entity?.service_alert;
+  if (!alert) return null;
 
-      const agency =
-        entity.agency_id ??
-        alert.agency_id ??
-        inferAgency(`${header} ${description}`);
+  const header = translatedText(alert.header_text ?? alert.headerText) ?? "Transit alert";
+  const description =
+    translatedText(alert.description_text ?? alert.descriptionText) ?? "";
 
-      if (agency && !SF_TRANSIT_AGENCIES.has(agency.toUpperCase())) {
-        // Keep SF-relevant alerts by keyword when agency metadata is missing.
-        const blob = `${header} ${description}`.toLowerCase();
-        const sfKeywords = ["san francisco", "sfmta", "muni", "bart", "caltrain", "ggn"];
-        if (!sfKeywords.some((k) => blob.includes(k))) return null;
-      }
+  const agency =
+    resolveAgencyFromInformed(alert.informed_entity ?? alert.informedEntity) ??
+    entity.agency_id ??
+    alert.agency_id ??
+    inferAgency(`${header} ${description}`);
 
-      return {
-        id: String(entity.id ?? `alert-${index}`),
-        agency: agency ?? "Regional",
-        header,
-        description,
-        severity: 2,
-      };
-    })
-    .filter(Boolean);
+  if (!isSfRelevantAlert(agency, header, description)) {
+    return null;
+  }
+
+  return {
+    id: String(entity.id ?? `alert-${index}`),
+    agency: agency ?? "Regional",
+    header,
+    description,
+    severity: Number(alert.severity ?? 2) || 2,
+  };
+}
+
+/** @param {unknown} field */
+function translatedText(field) {
+  const translations = field?.translation;
+  if (!Array.isArray(translations) || translations.length === 0) return null;
+  return translations[0]?.text ?? null;
+}
+
+/** @param {unknown} informed */
+function resolveAgencyFromInformed(informed) {
+  if (!Array.isArray(informed)) return null;
+  for (const selector of informed) {
+    const code = selector?.agency_id ?? selector?.agencyId;
+    if (!code) continue;
+    const mapped = SF_TRANSIT_AGENCY_CODES.get(String(code).toUpperCase());
+    if (mapped) return mapped;
+  }
+  return null;
+}
+
+/**
+ * @param {string | null} agency
+ * @param {string} header
+ * @param {string} description
+ */
+function isSfRelevantAlert(agency, header, description) {
+  if (agency && SF_TRANSIT_AGENCIES.has(agency.toUpperCase())) return true;
+
+  const blob = `${header} ${description}`.toLowerCase();
+  const sfKeywords = [
+    "san francisco",
+    "sfmta",
+    "muni",
+    "bart",
+    "caltrain",
+    "golden gate",
+    "samtrans",
+  ];
+  return sfKeywords.some((k) => blob.includes(k));
 }
 
 /** @param {string} text */
@@ -174,11 +261,12 @@ function inferAgency(text) {
     if (upper.includes(agency)) return agency;
   }
   if (upper.includes("MUNI")) return "SFMTA";
+  if (upper.includes("BART")) return "BART";
   return null;
 }
 
 /** @returns {Array<Record<string, unknown>>} */
-function mapSchoolZones() {
+export function mapSchoolZones() {
   if (!isSchoolZoneWindowActive()) return [];
 
   return schoolsBundle.schools.map((school) => ({
@@ -220,7 +308,8 @@ export async function buildMapState(apiKey) {
     zones,
     transitAlerts,
     schoolZonesActive: isSchoolZoneWindowActive(),
+    demo: false,
   };
 }
 
-export { schoolsBundle, isSchoolZoneWindowActive };
+export { schoolsBundle, isSchoolZoneWindowActive, fetch511, parse511Json };
