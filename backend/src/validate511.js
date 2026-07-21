@@ -160,6 +160,11 @@ async function validateAggregatedState(apiKey) {
     typeof state.refreshedAt === "string" && !Number.isNaN(Date.parse(state.refreshedAt)),
     state.refreshedAt
   );
+  check(
+    "map_state_zones_version",
+    typeof state.zonesVersion === "string" && state.zonesVersion.length === 64,
+    `sha256=${String(state.zonesVersion).slice(0, 12)}…`
+  );
 
   const liveZones = state.zones.filter(
     (z) => z.source === "511-wzdx" || z.source === "511-traffic-events"

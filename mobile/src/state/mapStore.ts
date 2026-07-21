@@ -27,6 +27,9 @@ let refreshTimer: ReturnType<typeof setInterval> | null = null;
  *
  * Rule 1: the ShapeSource only depends on `mapState.zones`. Selection lives in
  * `selectedZoneId` and must not rebuild features (rule 2 uses a highlight filter).
+ *
+ * Skip logic compares `zonesVersion` (content hash), not `refreshedAt` — the
+ * backend advances refreshedAt on every cache rebuild even when zones are identical.
  */
 export const useMapStore = create<MapStore>((set, get) => ({
   mapState: null,
@@ -40,15 +43,28 @@ export const useMapStore = create<MapStore>((set, get) => ({
   },
 
   refresh: async () => {
-    set({ isLoading: true, errorMessage: null });
+    const isInitial = get().mapState === null;
+    if (isInitial) {
+      set({ isLoading: true, errorMessage: null });
+    } else {
+      set({ errorMessage: null });
+    }
+
     try {
       const next = await fetchMapState();
       const prev = get().mapState;
 
-      // Skip state write when the payload is unchanged — keeps `zones` referentially
-      // stable so ShapeSource does not re-upload (rule 1 / rule 6 memo path).
-      if (prev && prev.refreshedAt === next.refreshedAt) {
-        set({ isLoading: false, source: deriveSource(next, false) });
+      // Content-hash skip: keep zones referentially stable so ShapeSource does
+      // not re-upload. Still refresh metadata / transitAlerts when present.
+      if (prev && prev.zonesVersion && prev.zonesVersion === next.zonesVersion) {
+        set({
+          mapState: {
+            ...next,
+            zones: prev.zones,
+          },
+          isLoading: false,
+          source: deriveSource(next, false),
+        });
         return;
       }
 

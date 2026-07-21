@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { circlePolygon, isSchoolZoneWindowActive } from "./geo.js";
+import { hashZones } from "./zonesVersion.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const schoolsPath = join(__dirname, "../data/schools_sf.json");
@@ -45,15 +46,18 @@ export function buildDemoState() {
     activeUntil: null,
   };
 
+  const zones = [...schoolZones, demoClosure];
+
   return {
     refreshedAt: new Date().toISOString(),
+    zonesVersion: hashZones(zones),
     bbox: {
       south: 37.708,
       west: -122.515,
       north: 37.833,
       east: -122.357,
     },
-    zones: [...schoolZones, demoClosure],
+    zones,
     transitAlerts: [
       {
         id: "demo-alert",

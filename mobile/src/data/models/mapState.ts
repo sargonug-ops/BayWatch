@@ -38,6 +38,8 @@ export type MapBbox = {
 
 export type MapState = {
   refreshedAt: string;
+  /** SHA-256 of zone content; stable across cache rebuilds when zones are unchanged. */
+  zonesVersion: string;
   bbox: MapBbox;
   zones: Zone[];
   transitAlerts: TransitAlert[];
