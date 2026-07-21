@@ -38,6 +38,7 @@
 ```json
 {
   "refreshedAt": "2026-07-16T20:00:00.000Z",
+  "zonesVersion": "a1b2c3… (sha256 of sorted zone content)",
   "bbox": { "south": 37.70, "west": -122.52, "north": 37.84, "east": -122.35 },
   "zones": [
     {
@@ -64,6 +65,7 @@
 }
 ```
 
+`zonesVersion` is a SHA-256 hex digest of the zone array content. Clients compare it across polls and skip ShapeSource updates when it is unchanged (even if `refreshedAt` advances).
 ## Open questions (post-MVP)
 
 1. **Blast-radius inference** for incidents without official geometry (crowdsource vs. rules engine).

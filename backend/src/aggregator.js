@@ -8,6 +8,7 @@ import {
   SF_TRANSIT_AGENCY_CODES,
 } from "./config.js";
 import { geometryIntersectsSf, circlePolygon, isSchoolZoneWindowActive } from "./geo.js";
+import { hashZones } from "./zonesVersion.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const schoolsPath = join(__dirname, "../data/schools_sf.json");
@@ -299,6 +300,7 @@ export async function buildMapState(apiKey) {
 
   return {
     refreshedAt: new Date().toISOString(),
+    zonesVersion: hashZones(zones),
     bbox: {
       south: 37.708,
       west: -122.515,
