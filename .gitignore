@@ -4,6 +4,9 @@
 *.log
 backend/node_modules/
 backend/.env
+mobile/node_modules/
+mobile/.env
+mobile/.expo/
 android/local.properties
 android/.gradle/
 android/build/

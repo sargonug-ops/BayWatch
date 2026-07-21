@@ -17,8 +17,8 @@ Hyper-local situational awareness for San Francisco. Bay-Watch visualizes the ge
 
 ```
 ┌─────────────────┐     5 min poll      ┌──────────────────┐
-│  Android app    │ ◄────────────────── │  backend proxy   │
-│  (Compose+Mapbox)│   GET /api/v1/state │  (Node + cache)  │
+│  Expo / RN app  │ ◄────────────────── │  backend proxy   │
+│  (@rnmapbox)    │   GET /api/v1/state │  (Node + cache)  │
 └─────────────────┘                     └────────┬─────────┘
                                                    │
                      ┌─────────────────────────────┼─────────────────────────────┐
@@ -26,6 +26,9 @@ Hyper-local situational awareness for San Francisco. Bay-Watch visualizes the ge
               511 WZDx API                  511 Traffic Events           511 Service Alerts
          (local street closures)            (highway incidents)            (agency=RG)
 ```
+
+Mobile map rendering uses geometry-typed layers (Fill / Line / Circle) over one
+GeoJSON source — see `mobile/src/map/layers/ZoneLayers.tsx`.
 
 **Why a backend proxy?** The 511 API key must not ship inside the Android APK. The proxy normalizes feeds into a single `MapState` payload, caches responses for five minutes (matching the 511 rate limit), and filters geometry to the SF bounding box.
 
@@ -57,18 +60,21 @@ npm run validate:511   # live smoke test against 511 (requires API key)
 npm run dev
 ```
 
-### 2. Android
-
-1. Open `android/` in Android Studio (Ladybug or newer).
-2. Copy `android/local.properties.example` → `android/local.properties`.
-3. Add `MAPBOX_ACCESS_TOKEN` (public `pk.` token recommended) and `BAYWATCH_API_BASE_URL` (e.g. `http://10.0.2.2:3000` for emulator) to `local.properties`.
-4. Run on a device or emulator.
+### 2. Mobile (Expo / React Native)
 
 ```bash
-cd android
-./gradlew :app:assembleDebug
+cd mobile
+cp .env.example .env   # Mapbox token + backend URL
+npm install
+npx expo prebuild      # required — @rnmapbox/maps needs a dev build
+npm start
 ```
 
+See `mobile/README.md` for layer architecture and performance rules.
+
+### 3. Android (legacy Kotlin scaffold)
+
+> Prefer the Expo client above for new work. The Kotlin app under `android/` remains as an earlier prototype.
 ### Environment variables
 
 | Variable | Where | Description |
