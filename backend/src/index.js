@@ -49,6 +49,14 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(state));
     } catch (error) {
+      // Final safety net: serve lastKnownGood from the aggregator if present.
+      const { getLastKnownGoodState } = await import("./aggregator.js");
+      const stale = getLastKnownGoodState();
+      if (stale) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ ...stale, isDegraded: true }));
+        return;
+      }
       res.writeHead(502, { "Content-Type": "application/json" });
       res.end(
         JSON.stringify({

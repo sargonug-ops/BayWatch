@@ -61,11 +61,15 @@
       "severity": 2
     }
   ],
-  "schoolZonesActive": true
+  "schoolZonesActive": true,
+  "demo": false,
+  "isDegraded": false
 }
 ```
 
 `zonesVersion` is a SHA-256 hex digest of the zone array content. Clients compare it across polls and skip ShapeSource updates when it is unchanged (even if `refreshedAt` advances).
+
+`isDegraded` is `true` when the backend is serving `lastKnownGoodState` after upstream 511 retries are exhausted (stale-while-revalidate). Live successful fetches set it to `false`.
 ## Open questions (post-MVP)
 
 1. **Blast-radius inference** for incidents without official geometry (crowdsource vs. rules engine).

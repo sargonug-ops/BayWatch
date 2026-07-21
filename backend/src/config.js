@@ -10,6 +10,12 @@ export const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS ?? 300_000);
 
 export const FIVE11_BASE = "https://api.511.org";
 
+/** Total attempts for each upstream 511 HTTP call (1 initial + retries). */
+export const FIVE11_RETRY_ATTEMPTS = Number(process.env.FIVE11_RETRY_ATTEMPTS ?? 3);
+
+/** Delay between 511 retry attempts. */
+export const FIVE11_RETRY_DELAY_MS = Number(process.env.FIVE11_RETRY_DELAY_MS ?? 2_000);
+
 /** Display names used in the Android UI. */
 export const SF_TRANSIT_AGENCIES = new Set([
   "SFMTA",

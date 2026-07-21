@@ -23,6 +23,8 @@ function labelFor(source: DataSource): string {
   switch (source) {
     case 'live':
       return 'Live · 511';
+    case 'degraded':
+      return 'Live · stale cache';
     case 'demo':
       return 'Demo data';
     case 'offline':
@@ -36,6 +38,8 @@ function bannerStyle(source: DataSource) {
   switch (source) {
     case 'live':
       return styles.live;
+    case 'degraded':
+      return styles.degraded;
     case 'demo':
       return styles.demo;
     case 'offline':
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   live: { backgroundColor: 'rgba(46, 125, 50, 0.92)' },
+  degraded: { backgroundColor: 'rgba(183, 110, 0, 0.92)' },
   demo: { backgroundColor: 'rgba(245, 124, 0, 0.92)' },
   offline: { backgroundColor: 'rgba(198, 40, 40, 0.92)' },
   unknown: { backgroundColor: 'rgba(66, 66, 66, 0.85)' },

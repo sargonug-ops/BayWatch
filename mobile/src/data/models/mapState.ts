@@ -45,6 +45,8 @@ export type MapState = {
   transitAlerts: TransitAlert[];
   schoolZonesActive: boolean;
   demo: boolean;
+  /** True when backend served lastKnownGoodState after upstream retries failed. */
+  isDegraded?: boolean;
 };
 
-export type DataSource = 'unknown' | 'live' | 'demo' | 'offline';
+export type DataSource = 'unknown' | 'live' | 'demo' | 'offline' | 'degraded';
