@@ -8,8 +8,10 @@
 import { FIVE11_BASE } from "./config.js";
 import {
   buildMapState,
+  clearLastKnownGoodState,
   fetch511,
   fetchTransitAlerts,
+  getLastKnownGoodState,
   mapTrafficEvents,
   mapWzdxZones,
 } from "./aggregator.js";
@@ -153,6 +155,7 @@ async function validateUpstream(apiKey) {
  * @param {string} apiKey
  */
 async function validateAggregatedState(apiKey) {
+  clearLastKnownGoodState();
   const state = await buildMapState(apiKey);
   check("map_state_demo_flag", state.demo === false, `demo=${state.demo}`);
   check(
@@ -164,6 +167,16 @@ async function validateAggregatedState(apiKey) {
     "map_state_zones_version",
     typeof state.zonesVersion === "string" && state.zonesVersion.length === 64,
     `sha256=${String(state.zonesVersion).slice(0, 12)}…`
+  );
+  check(
+    "map_state_not_degraded",
+    state.isDegraded === false,
+    `isDegraded=${state.isDegraded}`
+  );
+  check(
+    "last_known_good_cached",
+    getLastKnownGoodState() != null && getLastKnownGoodState()?.zonesVersion === state.zonesVersion,
+    "lastKnownGoodState updated after successful fetch"
   );
 
   const liveZones = state.zones.filter(
@@ -179,6 +192,38 @@ async function validateAggregatedState(apiKey) {
     Array.isArray(state.transitAlerts) && state.transitAlerts.length > 0,
     `${state.transitAlerts.length} transit alerts in MapState`
   );
+
+  // Stale-while-revalidate: a hard failure after retries must serve lastKnownGood
+  // with isDegraded:true — never an empty zone overwrite.
+  const originalFetch = globalThis.fetch;
+  const previousAttempts = process.env.FIVE11_RETRY_ATTEMPTS;
+  const previousDelay = process.env.FIVE11_RETRY_DELAY_MS;
+  process.env.FIVE11_RETRY_ATTEMPTS = "2";
+  process.env.FIVE11_RETRY_DELAY_MS = "0";
+  globalThis.fetch = async () => {
+    throw new Error("forced upstream outage for SWR validation");
+  };
+  try {
+    const degraded = await buildMapState(apiKey);
+    check(
+      "swr_degraded_flag",
+      degraded.isDegraded === true,
+      `isDegraded=${degraded.isDegraded}`
+    );
+    check(
+      "swr_preserves_zones",
+      Array.isArray(degraded.zones) &&
+        degraded.zones.length === state.zones.length &&
+        degraded.zonesVersion === state.zonesVersion,
+      `zones=${degraded.zones?.length ?? 0} version=${String(degraded.zonesVersion).slice(0, 12)}…`
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (previousAttempts === undefined) delete process.env.FIVE11_RETRY_ATTEMPTS;
+    else process.env.FIVE11_RETRY_ATTEMPTS = previousAttempts;
+    if (previousDelay === undefined) delete process.env.FIVE11_RETRY_DELAY_MS;
+    else process.env.FIVE11_RETRY_DELAY_MS = previousDelay;
+  }
 
   console.log(
     `\n511 base: ${FIVE11_BASE}\nSummary: ${liveZones.length} live zones, ${state.transitAlerts.length} alerts`

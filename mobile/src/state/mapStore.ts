@@ -102,6 +102,7 @@ export const useMapStore = create<MapStore>((set, get) => ({
 function deriveSource(state: MapState, offline: boolean): DataSource {
   if (offline) return 'offline';
   if (state.demo) return 'demo';
+  if (state.isDegraded) return 'degraded';
   return 'live';
 }
 

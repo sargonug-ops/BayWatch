@@ -4,6 +4,8 @@ import { dirname, join } from "node:path";
 import GtfsRealtimeBindings from "gtfs-realtime-bindings";
 import {
   FIVE11_BASE,
+  FIVE11_RETRY_ATTEMPTS,
+  FIVE11_RETRY_DELAY_MS,
   SF_TRANSIT_AGENCIES,
   SF_TRANSIT_AGENCY_CODES,
 } from "./config.js";
@@ -16,6 +18,56 @@ const schoolsPath = join(__dirname, "../data/schools_sf.json");
 /** @type {{ version: number, schools: Array<{ id: string, name: string, lat: number, lng: number }> }} */
 const schoolsBundle = JSON.parse(readFileSync(schoolsPath, "utf8"));
 
+/**
+ * Last successful live MapState. Served with isDegraded:true when upstream
+ * retries are exhausted (stale-while-revalidate).
+ * @type {Record<string, unknown> | null}
+ */
+let lastKnownGoodState = null;
+
+/**
+ * @param {number} ms
+ */
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Retry an async operation up to `attempts` times with a fixed delay.
+ * @template T
+ * @param {() => Promise<T>} fn
+ * @param {{ attempts?: number, delayMs?: number, label?: string }} [options]
+ * @returns {Promise<T>}
+ */
+async function withRetries(fn, options = {}) {
+  const attempts =
+    options.attempts ??
+    Number(process.env.FIVE11_RETRY_ATTEMPTS ?? FIVE11_RETRY_ATTEMPTS);
+  const delayMs =
+    options.delayMs ??
+    Number(process.env.FIVE11_RETRY_DELAY_MS ?? FIVE11_RETRY_DELAY_MS);
+  const label = options.label ?? "upstream";
+
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(
+        `[511] ${label} attempt ${attempt}/${attempts} failed: ${message}`
+      );
+      if (attempt < attempts) {
+        await sleep(delayMs);
+      }
+    }
+  }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error(`[511] ${label} failed after ${attempts} attempts`);
+}
 /**
  * Parse 511 JSON responses, stripping a leading UTF-8 BOM when present.
  * @param {Response} response
@@ -39,7 +91,7 @@ function normalizeGeometry(geometry) {
  * @param {string} apiKey
  * @param {string} path
  */
-async function fetch511(apiKey, path) {
+async function fetch511Once(apiKey, path) {
   const url = `${FIVE11_BASE}${path}${path.includes("?") ? "&" : "?"}api_key=${apiKey}`;
   const response = await fetch(url, {
     headers: { Accept: "application/json" },
@@ -49,6 +101,15 @@ async function fetch511(apiKey, path) {
     throw new Error(`511 ${path} failed: ${response.status} ${body.slice(0, 200)}`);
   }
   return parse511Json(response);
+}
+
+/**
+ * Fetch a 511 JSON endpoint with aggressive retries (3 attempts, 2s delay).
+ * @param {string} apiKey
+ * @param {string} path
+ */
+async function fetch511(apiKey, path) {
+  return withRetries(() => fetch511Once(apiKey, path), { label: path });
 }
 
 /**
@@ -146,13 +207,16 @@ export function mapTrafficEvents(eventsPayload) {
 /**
  * @param {string} apiKey
  */
-export async function fetchTransitAlerts(apiKey) {
+async function fetchTransitAlertsOnce(apiKey) {
   const url = `${FIVE11_BASE}/transit/servicealerts?api_key=${apiKey}&agency=RG`;
   const response = await fetch(url, {
     headers: { Accept: "application/x-protobuf, application/json" },
   });
   if (!response.ok) {
-    return [];
+    const body = await response.text();
+    throw new Error(
+      `511 servicealerts failed: ${response.status} ${body.slice(0, 200)}`
+    );
   }
 
   const contentType = response.headers.get("content-type") ?? "";
@@ -164,6 +228,15 @@ export async function fetchTransitAlerts(apiKey) {
   const buffer = new Uint8Array(await response.arrayBuffer());
   const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(buffer);
   return mapTransitAlertsProtobuf(feed);
+}
+
+/**
+ * @param {string} apiKey
+ */
+export async function fetchTransitAlerts(apiKey) {
+  return withRetries(() => fetchTransitAlertsOnce(apiKey), {
+    label: "/transit/servicealerts",
+  });
 }
 
 /**
@@ -283,35 +356,68 @@ export function mapSchoolZones() {
 }
 
 /**
+ * Build live MapState from 511 feeds.
+ *
+ * Uses retries per upstream call. On hard failure after retries, serves
+ * `lastKnownGoodState` with `isDegraded: true` instead of empty zones.
+ *
  * @param {string} apiKey
  */
 export async function buildMapState(apiKey) {
-  const [wzdx, events, transitAlerts] = await Promise.all([
-    fetch511(apiKey, "/traffic/wzdx?includeAllDefinedEnums=true").catch(() => ({})),
-    fetch511(apiKey, "/traffic/events").catch(() => ({})),
-    fetchTransitAlerts(apiKey).catch(() => []),
-  ]);
+  try {
+    const [wzdx, events, transitAlerts] = await Promise.all([
+      fetch511(apiKey, "/traffic/wzdx?includeAllDefinedEnums=true"),
+      fetch511(apiKey, "/traffic/events"),
+      fetchTransitAlerts(apiKey),
+    ]);
 
-  const zones = [
-    ...mapWzdxZones(wzdx),
-    ...mapTrafficEvents(events),
-    ...mapSchoolZones(),
-  ];
+    const zones = [
+      ...mapWzdxZones(wzdx),
+      ...mapTrafficEvents(events),
+      ...mapSchoolZones(),
+    ];
 
-  return {
-    refreshedAt: new Date().toISOString(),
-    zonesVersion: hashZones(zones),
-    bbox: {
-      south: 37.708,
-      west: -122.515,
-      north: 37.833,
-      east: -122.357,
-    },
-    zones,
-    transitAlerts,
-    schoolZonesActive: isSchoolZoneWindowActive(),
-    demo: false,
-  };
+    const state = {
+      refreshedAt: new Date().toISOString(),
+      zonesVersion: hashZones(zones),
+      bbox: {
+        south: 37.708,
+        west: -122.515,
+        north: 37.833,
+        east: -122.357,
+      },
+      zones,
+      transitAlerts,
+      schoolZonesActive: isSchoolZoneWindowActive(),
+      demo: false,
+      isDegraded: false,
+    };
+
+    lastKnownGoodState = state;
+    return state;
+  } catch (error) {
+    if (lastKnownGoodState) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(
+        `[511] serving lastKnownGoodState (isDegraded=true): ${message}`
+      );
+      return {
+        ...lastKnownGoodState,
+        isDegraded: true,
+      };
+    }
+    throw error;
+  }
 }
 
-export { schoolsBundle, isSchoolZoneWindowActive, fetch511, parse511Json };
+/** @returns {Record<string, unknown> | null} */
+export function getLastKnownGoodState() {
+  return lastKnownGoodState;
+}
+
+/** Test helper — clear SWR cache between validations. */
+export function clearLastKnownGoodState() {
+  lastKnownGoodState = null;
+}
+
+export { schoolsBundle, isSchoolZoneWindowActive, fetch511, parse511Json, withRetries };

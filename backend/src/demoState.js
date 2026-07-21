@@ -70,5 +70,6 @@ export function buildDemoState() {
     ],
     schoolZonesActive: isSchoolZoneWindowActive(),
     demo: true,
+    isDegraded: false,
   };
 }
