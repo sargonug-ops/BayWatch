@@ -1,8 +1,7 @@
-import type { Feature, FeatureCollection, Point, Position } from 'geojson';
+import type { Feature, FeatureCollection, Point } from 'geojson';
 
-import type { GeoJsonGeometry, Zone } from '../../data/models/mapState';
+import type { Zone } from '../../data/models/mapState';
 import { ZoneProps } from '../../data/models/zoneProps';
-import { SCHOOL_ZONE_RADIUS_METERS } from '../constants';
 
 type ZoneFeatureProperties = {
   [ZoneProps.id]: string;
@@ -12,31 +11,27 @@ type ZoneFeatureProperties = {
   [ZoneProps.severity]: number;
   [ZoneProps.source]: string;
   [ZoneProps.activeUntil]: string | null;
-  [ZoneProps.radiusMeters]?: number;
 };
 
 /**
  * Pure: Zone[] → FeatureCollection for the Mapbox ShapeSource.
  *
- * Rule 6: school zones become Point features (CircleLayer), never dense polygons.
- * MultiPoint incidents are exploded to Point features for simpler hit-testing.
- * LineString / Polygon geometries are preserved as-is for Line/Fill layers.
+ * Geometry is preserved as the backend sends it:
+ * - Polygon / MultiPolygon (school 150 m buffers, closures) → FillLayer
+ * - LineString / MultiLineString (WZDx corridors) → LineLayer
+ * - Point (stray WZDx incidents) → CircleLayer
+ * MultiPoint is exploded into Point features for simpler hit-testing.
  */
 export function buildZoneFeatures(zones: Zone[]): FeatureCollection {
   const features: Feature[] = [];
 
   for (const zone of zones) {
-    if (zone.type === 'SCHOOL_ZONE') {
-      features.push(toSchoolPointFeature(zone));
-      continue;
-    }
-
     if (zone.geometry.type === 'MultiPoint') {
       features.push(...explodeMultiPoint(zone));
       continue;
     }
 
-    features.push(toFeature(zone, zone.geometry));
+    features.push(toFeature(zone));
   }
 
   return { type: 'FeatureCollection', features };
@@ -54,28 +49,12 @@ function baseProperties(zone: Zone): ZoneFeatureProperties {
   };
 }
 
-function toFeature(zone: Zone, geometry: GeoJsonGeometry): Feature {
+function toFeature(zone: Zone): Feature {
   return {
     type: 'Feature',
     id: zone.id,
     properties: baseProperties(zone),
-    geometry,
-  };
-}
-
-function toSchoolPointFeature(zone: Zone): Feature<Point> {
-  const center = geometryCenter(zone.geometry) ?? ([0, 0] as Position);
-  return {
-    type: 'Feature',
-    id: zone.id,
-    properties: {
-      ...baseProperties(zone),
-      [ZoneProps.radiusMeters]: SCHOOL_ZONE_RADIUS_METERS,
-    },
-    geometry: {
-      type: 'Point',
-      coordinates: center,
-    },
+    geometry: zone.geometry,
   };
 }
 
@@ -94,33 +73,4 @@ function explodeMultiPoint(zone: Zone): Feature<Point>[] {
       coordinates,
     },
   }));
-}
-
-/** Best-effort center for converting school polygons → points. */
-function geometryCenter(geometry: GeoJsonGeometry): Position | null {
-  switch (geometry.type) {
-    case 'Point':
-      return geometry.coordinates;
-    case 'MultiPoint':
-    case 'LineString':
-      return averagePositions(geometry.coordinates);
-    case 'MultiLineString':
-    case 'Polygon':
-      return averagePositions(geometry.coordinates.flat());
-    case 'MultiPolygon':
-      return averagePositions(geometry.coordinates.flat(2));
-    default:
-      return null;
-  }
-}
-
-function averagePositions(positions: Position[]): Position | null {
-  if (positions.length === 0) return null;
-  let lng = 0;
-  let lat = 0;
-  for (const [x, y] of positions) {
-    lng += x;
-    lat += y;
-  }
-  return [lng / positions.length, lat / positions.length];
 }

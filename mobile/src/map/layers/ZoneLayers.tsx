@@ -116,13 +116,7 @@ const circleStyle: CircleStyle = {
     ZONE_COLORS.SCHOOL_ZONE,
   ],
   circleOpacity: 0.45,
-  circleRadius: [
-    'match',
-    ['get', ZoneProps.type],
-    'SCHOOL_ZONE',
-    18,
-    8,
-  ],
+  circleRadius: 8,
   circleStrokeWidth: 1.5,
   circleStrokeColor: [
     'match',
@@ -164,7 +158,8 @@ const highlightCircleStyle: CircleStyle = {
  * Rule 2: selection uses filtered highlight layers (not feature-state).
  * Rule 3: this component is a MapView child; overlays stay as siblings outside.
  * Rule 5: granular store selectors (`useZones`, `useSelectedZoneId`).
- * Rule 6: `buildZoneFeatures` emits Points for schools / exploded MultiPoints.
+ * Rule 6: `buildZoneFeatures` preserves backend geometry; school 150 m buffers
+ *          are Polygons rendered by the FillLayer.
  */
 function ZoneLayersComponent() {
   const zones = useZones();
