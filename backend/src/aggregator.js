@@ -9,7 +9,12 @@ import {
   SF_TRANSIT_AGENCIES,
   SF_TRANSIT_AGENCY_CODES,
 } from "./config.js";
-import { geometryIntersectsSf, circlePolygon, isSchoolZoneWindowActive } from "./geo.js";
+import {
+  geometryIntersectsSf,
+  circlePolygon,
+  bufferPointMeters,
+  isSchoolZoneWindowActive,
+} from "./geo.js";
 import { hashZones } from "./zonesVersion.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -349,7 +354,7 @@ export function mapSchoolZones() {
     title: school.name,
     summary: "Approximate school zone — drop-off / pickup window (estimated)",
     severity: 1,
-    geometry: circlePolygon(school.lat, school.lng, 150),
+    geometry: bufferPointMeters(school.lat, school.lng, 150),
     source: "datasf-schools",
     activeUntil: null,
   }));

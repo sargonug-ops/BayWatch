@@ -16,6 +16,4 @@ export const SF_CENTER: [number, number] = [-122.4194, 37.7749];
 
 export const DEFAULT_ZOOM = 12;
 
-export const SCHOOL_ZONE_RADIUS_METERS = 150;
-
 export const REFRESH_INTERVAL_MS = 5 * 60 * 1000;

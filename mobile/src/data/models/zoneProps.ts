@@ -10,8 +10,6 @@ export const ZoneProps = {
   severity: 'severity',
   source: 'source',
   activeUntil: 'activeUntil',
-  /** School-zone circle radius in meters (Point features only). */
-  radiusMeters: 'radiusMeters',
 } as const;
 
 export type ZonePropKey = (typeof ZoneProps)[keyof typeof ZoneProps];

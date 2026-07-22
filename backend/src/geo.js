@@ -1,4 +1,24 @@
+import buffer from "@turf/buffer";
+import { point } from "@turf/helpers";
 import { SF_BBOX } from "./config.js";
+
+/**
+ * Buffer a lng/lat coordinate into a true geodesic Polygon using Turf.js.
+ * Used for school zones so clients render a real 150 m footprint via a FillLayer.
+ *
+ * @param {number} lat
+ * @param {number} lng
+ * @param {number} radiusMeters
+ * @param {number} [steps] quadrant segments (higher = smoother circle)
+ * @returns {import('geojson').Polygon}
+ */
+export function bufferPointMeters(lat, lng, radiusMeters, steps = 16) {
+  const circle = buffer(point([lng, lat]), radiusMeters, {
+    units: "meters",
+    steps,
+  });
+  return circle.geometry;
+}
 
 /** @param {import('geojson').Position} coord [lng, lat] */
 export function isInSfBbox(coord) {

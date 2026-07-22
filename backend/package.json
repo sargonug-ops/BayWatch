@@ -12,6 +12,8 @@
     "node": ">=20"
   },
   "dependencies": {
+    "@turf/buffer": "^7.3.5",
+    "@turf/helpers": "^7.3.5",
     "gtfs-realtime-bindings": "^1.1.1"
   }
 }
